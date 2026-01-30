@@ -78,8 +78,10 @@ RUN git clone https://github.com/czimaginginstitute/AreTomo2.git
 
 # Build AreTomo2 with CUDA 11.8
 # Using makefile11 for CUDA 11.x compatibility
+# Note: -no-pie is needed because the pre-compiled libraries weren't built with -fPIE
 WORKDIR /build/AreTomo2
-RUN make exe -f makefile11 CUDAHOME=/usr/local/cuda
+RUN sed -i 's/@g++ -g -pthread -m64/@g++ -g -pthread -m64 -no-pie/' makefile11 && \
+    make exe -f makefile11 CUDAHOME=/usr/local/cuda
 
 # Install AreTomo2 to /usr/local/bin
 RUN cp AreTomo2* /usr/local/bin/ 2>/dev/null || \
@@ -99,14 +101,14 @@ WORKDIR /build/relion
 RUN git checkout ver5.0
 
 # Create build directory and configure with CMake
-# Note: Using system CUDA 11.8, enabling GPU support
+# Note: Using system CUDA 11.8, FFTW, and FLTK libraries
 # Using -j4 to limit parallel jobs and reduce memory usage
+# FETCH_WEIGHTS=OFF skips downloading optional ML model weights during build
 RUN mkdir build && cd build && \
     cmake .. \
         -DCMAKE_INSTALL_PREFIX=/opt/relion \
         -DGUI=ON \
-        -DFORCE_OWN_FFTW=ON \
-        -DFORCE_OWN_FLTK=ON \
+        -DFETCH_WEIGHTS=OFF \
         && \
     make -j4 && \
     make install
