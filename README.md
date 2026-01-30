@@ -25,18 +25,18 @@ This repository provides Docker images for essential cryo-ET processing tools, e
 ### Using Pre-built Images
 
 ```bash
-# Pull the all-in-one image (when available)
-docker pull ghcr.io/YOUR_USERNAME/cryoem-suite:latest
+# Pull the all-in-one image
+docker pull ghcr.io/walidabualafia/cryoem-suite:latest
 
 # Run with GPU support
-docker run --gpus all -v /path/to/data:/data -it cryoem-suite
+docker run --gpus all -v /path/to/data:/data -it ghcr.io/walidabualafia/cryoem-suite
 ```
 
 ### Building from Source
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/on-the-fly-cryo-et.git
+git clone https://github.com/walidabualafia/on-the-fly-cryo-et.git
 cd on-the-fly-cryo-et
 
 # Build the combined image

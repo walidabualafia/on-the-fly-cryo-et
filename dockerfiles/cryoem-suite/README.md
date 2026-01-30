@@ -10,7 +10,15 @@ All-in-one Docker container with WarpTools, AreTomo2, and RELION 5.
 | AreTomo2 | Latest | Tomographic alignment and reconstruction |
 | RELION | 5.0 | Single particle analysis, subtomogram averaging |
 
-## Building
+## Pre-built Image
+
+A pre-built image is available from GitHub Container Registry:
+
+```bash
+docker pull ghcr.io/walidabualafia/cryoem-suite:latest
+```
+
+## Building from Source
 
 ```bash
 docker build --platform linux/amd64 -t cryoem-suite .
