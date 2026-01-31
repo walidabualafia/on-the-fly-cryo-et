@@ -35,3 +35,7 @@ venv/
 *.mrc
 *.tif
 *.tiff
+
+# Singularity containers
+*.sif
+*.simg

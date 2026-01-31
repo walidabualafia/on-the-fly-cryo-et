@@ -54,4 +54,35 @@ docker run --gpus all \
 | `relion_ctf_refine` | CTF refinement |
 | `relion_motion_refine` | Bayesian polishing |
 
+## Using with Singularity/Apptainer
+
+```bash
+# Pull/convert the image
+singularity pull relion5.sif docker://ghcr.io/walidabualafia/relion5:latest
+
+# Run RELION commands
+singularity exec --nv relion5.sif relion_refine --help
+singularity exec --nv relion5.sif relion_reconstruct --help
+
+# With data binding
+singularity exec --nv --bind /scratch:/scratch relion5.sif \
+    relion_refine --o /scratch/output/run --i /scratch/data/particles.star
+
+# Launch GUI (X11 forwarding usually works automatically with Singularity)
+singularity exec --nv relion5.sif relion
+```
+
+### HPC Usage with SLURM
+
+```bash
+#!/bin/bash
+#SBATCH --gres=gpu:1
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=64G
+
+singularity exec --nv /path/to/relion5.sif \
+    relion_refine_mpi --o output/run --i particles.star --ref reference.mrc \
+    --pool 30 --j 8 --gpu
+```
+
 See [RELION documentation](https://relion.readthedocs.io/) for full usage.

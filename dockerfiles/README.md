@@ -34,9 +34,39 @@ All images require:
 ## GPU Requirements
 
 All images require NVIDIA GPUs at runtime:
-- nvidia-container-toolkit installed
+- nvidia-container-toolkit installed (Docker) or `--nv` flag (Singularity)
 - CUDA-compatible driver (11.8+ for most images)
-- `--gpus all` flag when running containers
+- `--gpus all` flag when running Docker containers
+
+## Using with Singularity/Apptainer
+
+All Docker images can be converted to Singularity SIF files for use on HPC clusters:
+
+```bash
+# Convert any image to Singularity format
+singularity pull cryoem-suite.sif docker://ghcr.io/walidabualafia/cryoem-suite:latest
+singularity pull warptools.sif docker://ghcr.io/walidabualafia/warptools:latest
+singularity pull relion5.sif docker://ghcr.io/walidabualafia/relion5:latest
+singularity pull aretomo2.sif docker://ghcr.io/walidabualafia/aretomo2:latest
+
+# Run with GPU support
+singularity exec --nv cryoem-suite.sif <command>
+```
+
+### Binding Data Directories
+
+Singularity automatically binds your home directory. For other paths:
+
+```bash
+singularity exec --nv --bind /scratch:/scratch cryoem-suite.sif WarpTools --help
+```
+
+### HPC Considerations
+
+- SIF files are read-only and portable across nodes
+- No root privileges required to run
+- GPU access via `--nv` flag
+- Works with SLURM and other job schedulers
 
 ## Base Images
 

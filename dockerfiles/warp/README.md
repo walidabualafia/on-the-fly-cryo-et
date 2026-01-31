@@ -37,4 +37,24 @@ WarpTools commands:
 - `ts_motion` - Motion correction
 - `ts_reconstruct` - Tomogram reconstruction
 
+## Using with Singularity/Apptainer
+
+```bash
+# Pull/convert the image
+singularity pull warptools.sif docker://ghcr.io/walidabualafia/warptools:latest
+
+# Show help
+singularity exec --nv warptools.sif WarpTools --help
+
+# Process data
+singularity exec --nv warptools.sif WarpTools ts_import --help
+
+# With data binding
+singularity exec --nv --bind /scratch:/scratch warptools.sif \
+    WarpTools ts_import --mdocs /scratch/data/*.mdoc
+
+# Interactive shell
+singularity shell --nv warptools.sif
+```
+
 See [WarpTools documentation](https://warpem.github.io/warp/user_guide/warptools/) for full usage.

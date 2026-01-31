@@ -102,23 +102,90 @@ Uses CUDA 11.8 for compatibility with WarpTools. Ensure your driver supports CUD
 docker run --gpus all cryoem-suite nvidia-smi
 ```
 
+## Using with Singularity/Apptainer
+
+Convert the Docker image to Singularity format for HPC usage:
+
+### Pull/Convert Image
+
+```bash
+singularity pull cryoem-suite.sif docker://ghcr.io/walidabualafia/cryoem-suite:latest
+```
+
+### Running with Singularity
+
+**WarpTools:**
+```bash
+singularity exec --nv cryoem-suite.sif WarpTools --help
+singularity exec --nv cryoem-suite.sif WarpTools ts_import --mdocs /data/*.mdoc
+```
+
+**AreTomo2:**
+```bash
+singularity exec --nv cryoem-suite.sif AreTomo2 \
+    -InMrc /data/tilt_series.mrc \
+    -OutMrc /data/tomogram.mrc \
+    -VolZ 1200
+```
+
+**RELION:**
+```bash
+singularity exec --nv cryoem-suite.sif relion_refine --help
+```
+
+### Binding Data Directories
+
+```bash
+# Bind external storage
+singularity exec --nv --bind /scratch:/scratch cryoem-suite.sif WarpTools --help
+
+# Bind multiple directories
+singularity exec --nv --bind /data1:/data1,/data2:/data2 cryoem-suite.sif AreTomo2 --help
+```
+
+### Using Wrapper Scripts
+
+For convenient command-line usage, use the wrapper scripts in `bin/`:
+
+```bash
+# One-time setup
+source ../../bin/setup.sh /path/to/cryoem-suite.sif
+
+# Run tools directly
+WarpTools ts_import --help
+AreTomo2 -InMrc input.mrc -OutMrc output.mrc
+relion_refine --o output --i particles.star
+```
+
 ## Troubleshooting
 
-**"GPU not found":**
+**"GPU not found" (Docker):**
 ```bash
 # Ensure nvidia-container-toolkit is installed
 sudo apt install nvidia-container-toolkit
 sudo systemctl restart docker
 ```
 
+**"GPU not found" (Singularity):**
+```bash
+# Ensure you're using the --nv flag
+singularity exec --nv cryoem-suite.sif nvidia-smi
+```
+
 **X11 display issues (RELION GUI):**
 ```bash
-# On Linux host
+# On Linux host (Docker)
 xhost +local:docker
+
+# For Singularity
+singularity exec --nv cryoem-suite.sif relion
 ```
 
 **WarpTools not found:**
 ```bash
-# Always use the with-warp wrapper or manually activate conda
+# Docker: Always use the with-warp wrapper or manually activate conda
 docker run --gpus all -v /data:/data -it cryoem-suite with-warp WarpTools --help
+
+# Singularity: WarpTools should be in PATH directly
+singularity exec --nv cryoem-suite.sif WarpTools --help
 ```

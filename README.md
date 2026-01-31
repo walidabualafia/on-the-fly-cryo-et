@@ -19,10 +19,12 @@ This repository provides Docker images for essential cryo-ET processing tools, e
 
 ### Prerequisites
 
-- Docker with NVIDIA GPU support ([nvidia-container-toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html))
+- Docker with NVIDIA GPU support ([nvidia-container-toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html)) OR Singularity/Apptainer
 - NVIDIA GPU with compute capability 5.0+ (Pascal or newer recommended)
 
 ### Using Pre-built Images
+
+#### Docker
 
 ```bash
 # Pull the all-in-one image
@@ -31,6 +33,37 @@ docker pull ghcr.io/walidabualafia/cryoem-suite:latest
 # Run with GPU support
 docker run --gpus all -v /path/to/data:/data -it ghcr.io/walidabualafia/cryoem-suite
 ```
+
+#### Singularity/Apptainer
+
+```bash
+# Pull and convert from Docker registry
+singularity pull cryoem-suite.sif docker://ghcr.io/walidabualafia/cryoem-suite:latest
+
+# Run with GPU support
+singularity exec --nv cryoem-suite.sif WarpTools --help
+singularity exec --nv cryoem-suite.sif AreTomo2 --help
+singularity exec --nv cryoem-suite.sif relion --help
+
+# Interactive shell
+singularity shell --nv cryoem-suite.sif
+```
+
+#### Using the Wrapper Scripts (Recommended for Singularity)
+
+For easier command-line usage with Singularity, use the provided wrapper scripts in the `bin/` directory:
+
+```bash
+# Set up the wrappers (one-time setup)
+source bin/setup.sh /path/to/cryoem-suite.sif
+
+# Now run tools directly
+WarpTools ts_import --help
+AreTomo2 -InMrc input.mrc -OutMrc output.mrc
+relion_refine --help
+```
+
+See [`bin/README.md`](bin/README.md) for detailed setup instructions.
 
 ### Building from Source
 

@@ -55,4 +55,31 @@ docker run --gpus all -v /path/to/data:/data aretomo2 \
 
 AreTomo2 recommends GPUs with 20GB+ VRAM for optimal performance. For smaller GPUs, increase `-OutBin` to reduce memory usage.
 
+## Using with Singularity/Apptainer
+
+```bash
+# Pull/convert the image
+singularity pull aretomo2.sif docker://ghcr.io/walidabualafia/aretomo2:latest
+
+# Show help
+singularity exec --nv aretomo2.sif AreTomo2 --help
+
+# Basic reconstruction
+singularity exec --nv aretomo2.sif AreTomo2 \
+    -InMrc /path/to/tilt_series.mrc \
+    -OutMrc /path/to/tomogram.mrc \
+    -VolZ 1200
+
+# With data binding
+singularity exec --nv --bind /scratch:/scratch aretomo2.sif AreTomo2 \
+    -InMrc /scratch/data/tilt_series.mrc \
+    -OutMrc /scratch/output/tomogram.mrc \
+    -AngFile /scratch/data/angles.tlt \
+    -VolZ 1200 \
+    -OutBin 4 \
+    -TiltCor 1 \
+    -FlipVol 1 \
+    -Gpu 0
+```
+
 See [AreTomo2 documentation](https://github.com/czimaginginstitute/AreTomo2) for full usage.
