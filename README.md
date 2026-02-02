@@ -135,6 +135,6 @@ Contributions are welcome! Please feel free to submit issues or pull requests.
 
 ## Acknowledgments
 
-- [Bharat Lab](https://www.mrc-lmb.cam.ac.uk/bharat) for WARP
+- [Warp](https://github.com/warpem/warp) was originally developed by Dimitry Tegunov in Patrick Cramer's lab at the Max Planck Institute for Biophysical Chemistry in Göttingen, Germany. Warp is now being developed by Dimitry Tegunov and Alister Burt at Genentech, Inc. in South San Francisco, USA.
 - [Chan Zuckerberg Imaging Institute](https://www.czii.org/) for AreTomo2
 - [Scheres Lab](https://www2.mrc-lmb.cam.ac.uk/groups/scheres/) for RELION
