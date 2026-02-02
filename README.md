@@ -28,17 +28,17 @@ This repository provides Docker images for essential cryo-ET processing tools, e
 
 ```bash
 # Pull the all-in-one image
-docker pull ghcr.io/walidabualafia/cryoem-suite:latest
+docker pull wabuala/cryo-et-on-the-fly:latest
 
 # Run with GPU support
-docker run --gpus all -v /path/to/data:/data -it ghcr.io/walidabualafia/cryoem-suite
+docker run --gpus all -v /path/to/data:/data -it wabuala/cryo-et-on-the-fly
 ```
 
 #### Singularity/Apptainer
 
 ```bash
 # Pull and convert from Docker registry
-singularity pull cryoem-suite.sif docker://ghcr.io/walidabualafia/cryoem-suite:latest
+singularity pull cryoem-suite.sif docker://wabuala/cryo-et-on-the-fly:latest
 
 # Run with GPU support
 singularity exec --nv cryoem-suite.sif WarpTools --help

@@ -15,7 +15,7 @@ All-in-one Docker container with WarpTools, AreTomo2, and RELION 5.
 A pre-built image is available from GitHub Container Registry:
 
 ```bash
-docker pull ghcr.io/walidabualafia/cryoem-suite:latest
+docker pull wabuala/cryo-et-on-the-fly:latest
 ```
 
 ## Building from Source
@@ -109,7 +109,7 @@ Convert the Docker image to Singularity format for HPC usage:
 ### Pull/Convert Image
 
 ```bash
-singularity pull cryoem-suite.sif docker://ghcr.io/walidabualafia/cryoem-suite:latest
+singularity pull cryoem-suite.sif docker://wabuala/cryo-et-on-the-fly:latest
 ```
 
 ### Running with Singularity

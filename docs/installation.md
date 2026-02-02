@@ -119,7 +119,7 @@ apptainer build cryoem-suite.sif docker-archive://cryoem-suite.tar
 Or build directly from Docker Hub (when images are published):
 
 ```bash
-apptainer build cryoem-suite.sif docker://ghcr.io/YOUR_USERNAME/cryoem-suite:latest
+apptainer build cryoem-suite.sif docker://wabuala/cryo-et-on-the-fly:latest
 ```
 
 ## Troubleshooting

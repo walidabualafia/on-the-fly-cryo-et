@@ -44,7 +44,7 @@ All Docker images can be converted to Singularity SIF files for use on HPC clust
 
 ```bash
 # Convert any image to Singularity format
-singularity pull cryoem-suite.sif docker://ghcr.io/walidabualafia/cryoem-suite:latest
+singularity pull cryoem-suite.sif docker://wabuala/cryo-et-on-the-fly:latest
 singularity pull warptools.sif docker://ghcr.io/walidabualafia/warptools:latest
 singularity pull relion5.sif docker://ghcr.io/walidabualafia/relion5:latest
 singularity pull aretomo2.sif docker://ghcr.io/walidabualafia/aretomo2:latest
